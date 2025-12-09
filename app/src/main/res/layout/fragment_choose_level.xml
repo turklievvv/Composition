@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ChooseLevelFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите уровень"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp" />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button_level_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тестовый" />
+
+    <Button
+        android:backgroundTint="@color/green"
+        android:layout_marginTop="5dp"
+        android:id="@+id/button_level_easy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Легкий" />
+
+    <Button
+        android:backgroundTint="@color/yellow"
+        android:layout_marginTop="5dp"
+        android:id="@+id/button_level_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Средний" />
+
+    <Button
+        android:backgroundTint="@color/red"
+        android:layout_marginTop="5dp"
+        android:id="@+id/button_level_hard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сложный" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

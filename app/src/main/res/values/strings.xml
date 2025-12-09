@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Composittion</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="SostavChisla">Состав числа</string>
+    <string name="Rules_ofGame">Правила игры: перед вами будет три фигуры, две снизу и одна сверху, в двух из них будут числа. Необходимо, чтобы сумма чисел из двух нижних фигур была равна числу в верхней фигуре, для этого нужно вставить недостающее число.
+        \n \nПример: в верхнем круге число 7, в одном из нижних знак вопроса, а в другом число 4. Значит на месте вопросительного знака должно быть число 3, потому что 3 + 4 = 7</string>
+    <string name="QuestionMark">"?"</string>
+    <string name="progress_answers">Правильных ответов %1$s (Минимум %1$s) </string>
+    <string name="finishText1">Необходимое количество правильных \nответов: %1$s</string>
+    <string name="finishText2">Ваш счет: %1$s</string>
+    <string name="finishText3">Необходимый процент правильных \nответов: %1$s</string>
+    <string name="finishText4">Процент правильных \nответов: %1$s</string>
 </resources>

@@ -38,15 +38,15 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner ,object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                retryGame()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    retryGame()
+                }
             }
-        }
         )
-        binding.buttonTryAgain.setOnClickListener {
-            retryGame()
-        }
+        bindingViews()
     }
 
     override fun onDestroyView() {
@@ -59,9 +59,45 @@ class GameFinishedFragment : Fragment() {
             gameResult = it
         }
     }
+    private fun bindingViews(){
+        binding.buttonTryAgain.setOnClickListener {
+            retryGame()
+        }
+        binding.finishText1.text = getString(
+            R.string.finishText1,
+            gameResult.gameSettings.minCountOfRightAnswers.toString()
+        )
+        binding.finishText2.text =
+            getString(R.string.finishText2, gameResult.countOfRightAnswers.toString())
+        binding.finishText3.text = getString(
+            R.string.finishText3,
+            gameResult.gameSettings.minPercentOfRightAnswers.toString()
+        )
+        binding.finishText4.text = getString(R.string.finishText4,getPercentOfRightAnswers())
+        binding.finishEmoji.text = getWinnerText()
+    }
+
+    private fun getWinnerText(): String{
+        return if(gameResult.winner){
+            "Winner!!"
+        }else{
+            "Loser"
+        }
+    }
+
+    private fun getPercentOfRightAnswers()=with(gameResult){
+        if(countOfQuestions == 0){
+            0
+        }else{
+            ((countOfRightAnswers/countOfQuestions.toDouble())*100).toInt()
+        }
+    }
 
     private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(GameFragment.NAME, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack(
+            GameFragment.NAME,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     companion object {

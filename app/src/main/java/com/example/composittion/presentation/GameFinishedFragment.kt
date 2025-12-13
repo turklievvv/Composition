@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.composittion.R
 import com.example.composittion.databinding.FragmentChooseLevelBinding
 import com.example.composittion.databinding.FragmentGameFinishedBinding
@@ -15,17 +17,12 @@ import com.example.composittion.domain.entity.GameResult
 @Suppress("DEPRECATION")
 class GameFinishedFragment : Fragment() {
 
-    private lateinit var gameResult: GameResult
+    private val args by navArgs<GameFinishedFragmentArgs>()
 
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding: FragmentGameFinishedBinding
         get() = _binding ?: throw RuntimeException("FragmentGameFinishedBinding == null")
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,14 +35,6 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    retryGame()
-                }
-            }
-        )
         bindingViews()
     }
 
@@ -54,64 +43,43 @@ class GameFinishedFragment : Fragment() {
         _binding == null
     }
 
-    private fun parseArgs() {
-        requireArguments().getParcelable<GameResult>(GAME_RESULT_KEY)?.let {
-            gameResult = it
-        }
-    }
-    private fun bindingViews(){
+    private fun bindingViews() {
         binding.buttonTryAgain.setOnClickListener {
             retryGame()
         }
         binding.finishText1.text = getString(
             R.string.finishText1,
-            gameResult.gameSettings.minCountOfRightAnswers.toString()
+            args.gameResult.gameSettings.minCountOfRightAnswers.toString()
         )
         binding.finishText2.text =
-            getString(R.string.finishText2, gameResult.countOfRightAnswers.toString())
+            getString(R.string.finishText2, args.gameResult.countOfRightAnswers.toString())
         binding.finishText3.text = getString(
             R.string.finishText3,
-            gameResult.gameSettings.minPercentOfRightAnswers.toString()
+            args.gameResult.gameSettings.minPercentOfRightAnswers.toString()
         )
-        binding.finishText4.text = getString(R.string.finishText4,getPercentOfRightAnswers())
+        binding.finishText4.text =
+            getString(R.string.finishText4, getPercentOfRightAnswers().toString())
         binding.finishEmoji.text = getWinnerText()
     }
 
-    private fun getWinnerText(): String{
-        return if(gameResult.winner){
+    private fun getWinnerText(): String {
+        return if (args.gameResult.winner) {
             "Winner!!"
-        }else{
+        } else {
             "Loser"
         }
     }
 
-    private fun getPercentOfRightAnswers()=with(gameResult){
-        if(countOfQuestions == 0){
+    private fun getPercentOfRightAnswers() = with(args.gameResult) {
+        if (countOfQuestions == 0) {
             0
-        }else{
-            ((countOfRightAnswers/countOfQuestions.toDouble())*100).toInt()
+        } else {
+            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
         }
     }
 
     private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.NAME,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
-    }
-
-    companion object {
-
-        private const val GAME_RESULT_KEY = "game_result"
-
-        fun newInstance(gameResult: GameResult): GameFinishedFragment {
-            return GameFinishedFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(GAME_RESULT_KEY, gameResult)
-                }
-            }
-        }
-
+        findNavController().popBackStack()
     }
 
 }

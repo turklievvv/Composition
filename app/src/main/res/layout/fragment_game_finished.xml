@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="gameResult"
+            type="com.example.composittion.domain.entity.GameResult" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +18,7 @@
     android:layout_marginTop="50dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Winner"
+    app:resultWinnerText="@{gameResult.winner}"
     android:textSize="100sp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -23,39 +30,43 @@
         android:id="@+id/finishText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:requireAnswers="@{gameResult.gameSettings.minCountOfRightAnswers}"
         app:layout_constraintTop_toBottomOf="@id/finishEmoji"
-        android:text="@string/finishText1"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
+        android:text="@string/finishText1"
         />
 
     <TextView
         android:id="@+id/finishText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/finishText2"
+        app:requireAnswers2="@{gameResult.countOfRightAnswers}"
         app:layout_constraintTop_toBottomOf="@id/finishText1"
         app:layout_constraintStart_toStartOf="@id/finishText1"
         android:layout_marginTop="30dp"
+        android:text="@string/finishText2"
         />
     <TextView
         android:id="@+id/finishText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/finishText3"
+        app:requireAnswers3="@{gameResult.gameSettings.minPercentOfRightAnswers}"
         app:layout_constraintTop_toBottomOf="@id/finishText2"
         app:layout_constraintStart_toStartOf="@id/finishText1"
         android:layout_marginTop="30dp"
+        android:text="@string/finishText3"
         />
 
     <TextView
         android:id="@+id/finishText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/finishText4"
+        app:requireAnswers4="@{gameResult}"
         app:layout_constraintTop_toBottomOf="@id/finishText3"
         app:layout_constraintStart_toStartOf="@id/finishText1"
         android:layout_marginTop="30dp"
+        android:text="@string/finishText4"
         />
 
 
@@ -67,3 +78,4 @@
         android:text="Попробовать снова"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
